@@ -1,0 +1,81 @@
+#!/bin/zsh
+# joe prompt theme
+
+prompt_joe_help () {
+  cat <<'EOF'
+  General Look
+
+  Non-root users:
+  [24:00:00] user@host /path	[jobs: 1]
+   %
+
+  root:
+  [24:00:00] host /path   	 [jobs: 1]
+   %
+  
+  This prompt is color-scheme-able.  You can invoke it thus:
+
+  prompt joe [<color1> [<color2> [<color3> [<color4> [<color5>]]]]]
+  	color1: user@host (non-root user)
+	color2: [24:00:00] (time)
+	color3: /path/ (pwd)
+	color4: [jobs: 1] (jobcount in right prompt)
+	color5: host (like user@host but for root)
+
+EOF
+}
+
+prompt_joe_init_git(){
+  # Initialize colors.
+   autoload -U colors
+   colors
+ 
+  # Allow for functions in the prompt.
+ 
+  # Autoload zsh functions.
+  fpath=(~/.zsh/git $fpath)
+  autoload -U ~/.zsh/git/*(:t)
+ 
+  # Enable auto-execution of functions.
+  typeset -ga preexec_functions
+  typeset -ga precmd_functions
+  typeset -ga chpwd_functions
+ 
+  # Append git functions needed for prompt.
+  #preexec_functions+='preexec_update_git_vars'
+  #precmd_functions+='precmd_update_git_vars'
+  chpwd_functions+='chpwd_update_git_vars'
+  precmd_functions+='precmd_update_git_vars'
+  #preexec_functions+='chpwd_update_git_vars'
+  #postexec_functions+='chpwd_update_git_vars'
+}
+
+prompt_joe_setup () {
+	setopt prompt_subst
+	local -A col
+
+	prompt_joe_init_git	
+
+	col['user']=${1:-'red'}
+	col['time']=${2:-'cyan'}
+	col['pwd']=${3:-'blue'}
+	col['jobs']=${4:-'green'}
+	col['root']=${5:-'magenta'}
+	
+	local userstr
+	local usercol
+	if [ "$USER" = 'root' ]
+	then
+	  userstr="%F{$col['root']}%m"
+	  usercol=$col['root']
+	else
+	  userstr="%F{$col['user']}%n@%m"
+	  usercol=$col['user']
+	fi
+	PROMPT="%F{$col['time']}[%*] $userstr%b%B"'$(prompt_git_info)'"%B%F{$col['pwd']} %~$prompt_newline %% %b%k%f"
+#	PROMPT=$'%{${fg[cyan]}%}%B%~%b$(prompt_git_info)%{${fg[default]}%} '
+	PROMPT2="%F{$usercol}%_%F{$col['pwd']}> %b%k%f"
+	RPROMPT="%(?..%B:(%b) %B%F{$col['jobs']}%1(j.[jobs: %j]%b"
+}
+
+prompt_joe_setup "$@"

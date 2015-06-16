@@ -1,0 +1,40 @@
+color=green
+if [ -n "$__CURRENT_GIT_BRANCH" ]; then
+    local s2
+    local s=' %B('
+    s+="%F{cyan}${__CURRENT_GIT_BRANCH}%b"
+    case "$__CURRENT_GIT_BRANCH_STATUS" in
+        ahead*)
+        s2+="%F{green}${__CURRENT_GIT_BRANCH_STATUS#*" "}↑"
+        ;;
+        diverged*)
+        s2+="%F{red}↕"
+        ;;
+        behind*)
+        s2+="%F{blue}${__CURRENT_GIT_BRANCH_STATUS#*" "}↓"
+        ;;
+    esac
+#    if [ -n"$__CURRENT_GIT_BRANCH_IS_DIRTY" ]; then
+#        s+="⚡"
+#	color=yellow
+#    fi
+    if ! [[ -z "$__CURRENT_GIT_STATE" ]]; then
+        local str
+        str="$__CURRENT_GIT_STATE"
+        str="${str/M/"%F{yellow}M"}"
+        str="${str/A/"%F{green}+"}"
+        str="${str/D/"%F{red}-"}"
+        str="${str/R/"%F{yellow}↹"}"
+        str="${str/C/"%F{yellow}↷"}"
+        str="${str/'??'/"%F{red}?"}"
+        s2+="$str"
+    fi
+
+    if ! [[ -z $s2 ]]; then
+        s+="%b%B|$s2"
+    fi
+
+    s+='%b%B)%b'
+    
+    echo -n "$s"
+fi

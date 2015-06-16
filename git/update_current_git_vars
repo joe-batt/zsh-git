@@ -1,0 +1,22 @@
+unset __CURRENT_GIT_BRANCH
+unset __CURRENT_GIT_BRANCH_STATUS
+unset __CURRENT_GIT_STATE
+unset __CURRENT_GIT_NO
+
+local st state
+st="$(LANG="en" git status --porcelain 2>/dev/null)"
+if [[ $? -eq 0 ]]; then
+    st="$(echo "$st" | awk '{print $1}' | sort -u)"
+    local br="$(LANG="en" git branch -v | grep "^*" 2>/dev/null)"
+    __CURRENT_GIT_BRANCH=$(echo $br | cut -d" " -f2)
+
+    state=$(echo $br | grep -o "\[[^\[]*\]")
+    if ! [[ -z "$state"  ]]; then
+        state=${${state%"]"}#"["}
+        __CURRENT_GIT_BRANCH_STATUS="$state"
+    fi    
+
+    __CURRENT_GIT_STATE="${st//$'\n'}"
+else
+    __CURRENT_GIT_NO=1
+fi

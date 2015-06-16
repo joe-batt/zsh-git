@@ -1,0 +1,3 @@
+if [[ "$__CURRENT_GIT_NO" != "1" ]]; then
+    update_current_git_vars
+fi
