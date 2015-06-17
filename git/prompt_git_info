@@ -4,15 +4,19 @@ if [ -n "$__CURRENT_GIT_BRANCH" ]; then
     local s=' %B('
     s+="%F{cyan}${__CURRENT_GIT_BRANCH}%b"
     case "$__CURRENT_GIT_BRANCH_STATUS" in
+	ahead*behind*) 
+	    s2+="%F{red}${${__CURRENT_GIT_BRANCH_STATUS#*" "}%,*}⥮"
+	    s2+="${__CURRENT_GIT_BRANCH_STATUS##*" "}"
+	    ;;
         ahead*)
-        s2+="%F{green}${__CURRENT_GIT_BRANCH_STATUS#*" "}↑"
-        ;;
+	    s2+="%F{green}${__CURRENT_GIT_BRANCH_STATUS#*" "}↑"
+	    ;;
         diverged*)
-        s2+="%F{red}↕"
-        ;;
+	    s2+="%F{red}↕"
+	    ;;
         behind*)
-        s2+="%F{blue}${__CURRENT_GIT_BRANCH_STATUS#*" "}↓"
-        ;;
+	    s2+="%F{blue}${__CURRENT_GIT_BRANCH_STATUS#*" "}↓"
+	    ;;
     esac
 #    if [ -n"$__CURRENT_GIT_BRANCH_IS_DIRTY" ]; then
 #        s+="⚡"
