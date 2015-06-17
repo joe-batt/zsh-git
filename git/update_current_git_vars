@@ -9,8 +9,6 @@ if [[ $? -eq 0 ]]; then
     br=$(echo "$st" | head -n1)
     st="$(echo "$st" | tail -n+2 | awk '{print $1}' | sort -u)"
     __CURRENT_GIT_BRANCH=${${br#"## "}%%.*}
-    #local br="$(LANG="en" git branch -v | grep "^*" 2>/dev/null)"
-    #__CURRENT_GIT_BRANCH=$(echo $br | cut -d" " -f2)
 
     state=$(echo $br | grep -o "\[[^\[]*\]")
     if ! [[ -z "$state"  ]]; then
