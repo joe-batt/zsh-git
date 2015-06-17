@@ -31,6 +31,7 @@ if [ -n "$__CURRENT_GIT_BRANCH" ]; then
         str="${str/R/"%F{yellow}↹"}"
         str="${str/C/"%F{yellow}↷"}"
         str="${str/'??'/"%F{red}?"}"
+        str="${str/'UU'/"%F{magenta}⚡"}"
         s2+="$str"
     fi
 
