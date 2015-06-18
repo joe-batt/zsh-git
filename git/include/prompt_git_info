@@ -5,8 +5,8 @@ if [ -n "$__CURRENT_GIT_BRANCH" ]; then
     s+="%F{cyan}${__CURRENT_GIT_BRANCH}%b"
     case "$__CURRENT_GIT_BRANCH_STATUS" in
 	ahead*behind*) 
-	    s2+="%F{red}${${__CURRENT_GIT_BRANCH_STATUS#*" "}%,*}⥮"
-	    s2+="${__CURRENT_GIT_BRANCH_STATUS##*" "}"
+	    s2+="%b%F{red}${${__CURRENT_GIT_BRANCH_STATUS#*" "}%,*}⇅"
+	    s2+="${__CURRENT_GIT_BRANCH_STATUS##*" "}%B"
 	    ;;
         ahead*)
 	    s2+="%F{green}${__CURRENT_GIT_BRANCH_STATUS#*" "}↑"
