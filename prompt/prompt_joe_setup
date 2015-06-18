@@ -25,36 +25,11 @@ prompt_joe_help () {
 EOF
 }
 
-prompt_joe_init_git(){
-  # Initialize colors.
-   autoload -U colors
-   colors
- 
-  # Allow for functions in the prompt.
- 
-  # Autoload zsh functions.
-  fpath=(~/.zsh/git $fpath)
-  autoload -U ~/.zsh/git/*(:t)
- 
-  # Enable auto-execution of functions.
-  typeset -ga preexec_functions
-  typeset -ga precmd_functions
-  typeset -ga chpwd_functions
- 
-  # Append git functions needed for prompt.
-  preexec_functions+='preexec_update_git_vars'
-  #precmd_functions+='precmd_update_git_vars'
-  chpwd_functions+='chpwd_update_git_vars'
-  precmd_functions+='precmd_update_git_vars'
-  #preexec_functions+='chpwd_update_git_vars'
-  #postexec_functions+='chpwd_update_git_vars'
-}
-
 prompt_joe_setup () {
 	setopt prompt_subst
 	local -A col
 
-	prompt_joe_init_git	
+	source ~/.zsh/git/init_git_prompt.sh
 
 	col['user']=${1:-'red'}
 	col['time']=${2:-'cyan'}
@@ -72,9 +47,14 @@ prompt_joe_setup () {
 	  userstr="%F{$col['user']}%n@%m"
 	  usercol=$col['user']
 	fi
+
+	# main prompt
 	PROMPT="%F{$col['time']}[%*] $userstr%b%B"'$(prompt_git_info)'"%B%F{$col['pwd']} %~$prompt_newline %% %b%k%f"
-#	PROMPT=$'%{${fg[cyan]}%}%B%~%b$(prompt_git_info)%{${fg[default]}%} '
+
+	# sub prompt (e.g. "for> ")
 	PROMPT2="%F{$usercol}%_%F{$col['pwd']}> %b%k%f"
+
+	# right prompt, shows number jobs and :( if the last exit status was not 0
 	RPROMPT="%(?..%B:(%b) %B%F{$col['jobs']}%1(j.[jobs: %j]%b"
 }
 
