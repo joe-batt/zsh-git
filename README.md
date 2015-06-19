@@ -1,10 +1,13 @@
 # zsh-git
 
-This project is yet another fancy prompt that provides you with information about the current git directory.
+This project is yet another fancy prompt that provides you with information about the current git directory. In a git repository, the prompt looks like this:
+
+![the prompt](http://joe-batt.github.io/prompt.png)
 
 The prompt is split into two parts: the full prompt and the actual git module. This means you can include the git 
 info part in your favorite prompt, if you don't want to use the full prompt.
 
+I started out with concept in this <a href="http://sebastiancelis.com/2009/11/16/zsh-prompt-git-users/">blog post</a>.
 
 ## Installation
 Put all files into the <tt>.zsh</tt> directory in your home, if you don't have one, create it.
@@ -22,6 +25,9 @@ source ~/.zsh/git/init_git_prompt.sh
 ```
 
 Now you can use <tt>$(prompt_git_info)</tt> in your own prompt definition to show the git info
+
+## git Information Reference
+![reference](http://joe-batt.github.io/git-prompt-desc.png)
 
 ## Customization
 The git part does not allow customisation yet. But you can choose all colors used in the regular prompt:
