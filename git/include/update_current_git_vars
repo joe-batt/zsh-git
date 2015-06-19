@@ -2,6 +2,7 @@ unset __CURRENT_GIT_BRANCH
 unset __CURRENT_GIT_BRANCH_STATUS
 unset __CURRENT_GIT_STATE
 unset __CURRENT_GIT_NO
+unset __CURRENT_GIT_STAGED
 
 local st state
 st="$(LANG="en" git status -b --porcelain 2>/dev/null)"
@@ -9,6 +10,8 @@ if [[ $? -eq 0 ]]; then
     br=$(echo "$st" | head -n1)
     st="$(echo "$st" | tail -n+2 | awk '{print $1}' | sort -u)"
     __CURRENT_GIT_BRANCH=${${br#"## "}%%.*}
+
+    __CURRENT_GIT_STAGED=$(LANG="en" git stash show --shortstat 2>&1 | awk '{print $1}')
 
     state=$(echo $br | grep -o "\[[^\[]*\]")
     if ! [[ -z "$state"  ]]; then

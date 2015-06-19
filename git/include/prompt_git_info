@@ -18,10 +18,11 @@ if [ -n "$__CURRENT_GIT_BRANCH" ]; then
 	    s2+="%F{blue}${__CURRENT_GIT_BRANCH_STATUS#*" "}↓"
 	    ;;
     esac
-#    if [ -n"$__CURRENT_GIT_BRANCH_IS_DIRTY" ]; then
-#        s+="⚡"
-#	color=yellow
-#    fi
+
+    if [[ $__CURRENT_GIT_STAGED != "No" ]]; then
+        s2+="%b%F{white}${__CURRENT_GIT_STAGED}%B"
+    fi
+
     if ! [[ -z "$__CURRENT_GIT_STATE" ]]; then
         local str
         str="$__CURRENT_GIT_STATE"
