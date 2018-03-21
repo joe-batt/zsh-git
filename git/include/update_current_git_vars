@@ -11,7 +11,7 @@ if [[ $? -eq 0 ]]; then
     st="$(echo "$st" | tail -n+2 | awk '{print $1}' | sort -u)"
     __CURRENT_GIT_BRANCH=${${br#"## "}%%.*}
 
-    __CURRENT_GIT_STAGED=$(LANG="en" git stash show --shortstat 2>&1 | awk '{print $1}')
+    __CURRENT_GIT_STAGED=$(git stash list | wc -l)
 
     state=$(echo $br | grep -o "\[[^\[]*\]")
     if ! [[ -z "$state"  ]]; then

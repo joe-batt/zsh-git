@@ -19,8 +19,8 @@ if [ -n "$__CURRENT_GIT_BRANCH" ]; then
 	    ;;
     esac
 
-    if [[ $__CURRENT_GIT_STAGED != "No" ]]; then
-        s2+="%b%F{white}${__CURRENT_GIT_STAGED}%B"
+    if [[ $__CURRENT_GIT_STAGED -gt 0 ]]; then
+        s2+="%b%F{white}${__CURRENT_GIT_STAGED}S%B"
     fi
 
     if ! [[ -z "$__CURRENT_GIT_STATE" ]]; then
