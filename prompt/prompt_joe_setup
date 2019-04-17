@@ -1,5 +1,7 @@
 #!/bin/zsh
 # joe prompt theme
+GITDIR=${GITDIR:-~/git}
+ZSH_GIT_DIR=$GITDIT/zsh-git/
 
 prompt_joe_help () {
   cat <<'EOF'
@@ -29,7 +31,7 @@ prompt_joe_setup () {
 	setopt prompt_subst
 	local -A col
 
-	source ~/.zsh/git/init_git_prompt.sh
+	source $ZSH_GIT_DIR/git/init_git_prompt.sh
 
 	col['user']=${1:-'red'}
 	col['time']=${2:-'cyan'}
