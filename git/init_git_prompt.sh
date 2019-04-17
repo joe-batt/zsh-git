@@ -5,8 +5,8 @@ colors
 # Allow for functions in the prompt.
 
 # Autoload zsh functions.
-fpath=(~/.zsh/git/include $fpath)
-autoload -U ~/.zsh/git/include/*(:t)
+fpath=($ZSH_GIT_DIR/git/include $fpath)
+autoload -U $ZSH_GIT_DIR/git/include/*(:t)
 
 # Enable auto-execution of functions.
 typeset -ga preexec_functions
