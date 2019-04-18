@@ -1,5 +1,4 @@
 # Initialize colors.
-typeset -A GIT_BRANCH_COLORS
 autoload -U colors
 colors
 
