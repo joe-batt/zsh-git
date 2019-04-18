@@ -1,7 +1,21 @@
 # Initialize colors.
+typeset -A GIT_BRANCH_COLORS
 autoload -U colors
 colors
 
+# define default colors
+typeset -gA ZSH_GIT_COLORS
+: ${ZSH_GIT_COLORS[branch]:="cyan"}
+: ${ZSH_GIT_COLORS[ahead]:="green"}
+: ${ZSH_GIT_COLORS[behind]:="blue"}
+: ${ZSH_GIT_COLORS[ahead_behind]:="red"}
+: ${ZSH_GIT_COLORS[modified]:="yellow"}
+: ${ZSH_GIT_COLORS[added]:="green"}
+: ${ZSH_GIT_COLORS[conflict]:="magenta"}
+: ${ZSH_GIT_COLORS[deleted]:="red"}
+: ${ZSH_GIT_COLORS[copied]:="yellow"}
+: ${ZSH_GIT_COLORS[renamed]:="yellow"}
+: ${ZSH_GIT_COLORS[untracked]:="red"}
 # Allow for functions in the prompt.
 
 # Autoload zsh functions.

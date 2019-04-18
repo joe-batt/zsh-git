@@ -1,21 +1,20 @@
-color=green
 if [ -n "$__CURRENT_GIT_BRANCH" ]; then
     local s2
     local s=' %B('
-    s+="%F{cyan}${__CURRENT_GIT_BRANCH}%b"
+    s+="%F{$ZSH_GIT_COLORS[branch]}${__CURRENT_GIT_BRANCH}%b"
     case "$__CURRENT_GIT_BRANCH_STATUS" in
 	ahead*behind*) 
-	    s2+="%b%F{red}${${__CURRENT_GIT_BRANCH_STATUS#*" "}%,*}⇅"
+	    s2+="%b%F{$ZSH_GIT_COLORS[ahead_behind]}${${__CURRENT_GIT_BRANCH_STATUS#*" "}%,*}⇅"
 	    s2+="${__CURRENT_GIT_BRANCH_STATUS##*" "}%B"
 	    ;;
         ahead*)
-	    s2+="%F{green}${__CURRENT_GIT_BRANCH_STATUS#*" "}↑"
+	    s2+="%F{$ZSH_GIT_COLORS[ahead]}${__CURRENT_GIT_BRANCH_STATUS#*" "}↑"
 	    ;;
         diverged*)
-	    s2+="%F{red}↕"
+	    s2+="%F{$ZSH_GIT_COLORS[deleted]}↕"
 	    ;;
         behind*)
-	    s2+="%F{blue}${__CURRENT_GIT_BRANCH_STATUS#*" "}↓"
+	    s2+="%F{$ZSH_GIT_COLORS[behind]}${__CURRENT_GIT_BRANCH_STATUS#*" "}↓"
 	    ;;
     esac
 
@@ -26,13 +25,13 @@ if [ -n "$__CURRENT_GIT_BRANCH" ]; then
     if ! [[ -z "$__CURRENT_GIT_STATE" ]]; then
         local str
         str="$__CURRENT_GIT_STATE"
-        str="${str/M/"%F{yellow}M"}"
-        str="${str/A/"%F{green}+"}"
-        str="${str/D/"%F{red}-"}"
-        str="${str/R/"%F{yellow}↹"}"
-        str="${str/C/"%F{yellow}↷"}"
-        str="${str/'?'/"%F{red}?"}"
-        str="${str/'U'/"%F{magenta}⚡"}"
+        str="${str/M/"%F{$ZSH_GIT_COLORS[modified]}M"}"
+        str="${str/A/"%F{$ZSH_GIT_COLORS[added]}+"}"
+        str="${str/D/"%F{$ZSH_GIT_COLORS[deleted]}-"}"
+        str="${str/R/"%F{$ZSH_GIT_COLORS[renamed]}↹"}"
+        str="${str/C/"%F{$ZSH_GIT_COLORS[copied]}↷"}"
+        str="${str/'?'/"%F{$ZSH_GIT_COLORS[deleted]}?"}"
+        str="${str/'U'/"%F{$ZSH_GIT_COLORS[conflict]}⚡"}"
         s2+="$str"
     fi
 
