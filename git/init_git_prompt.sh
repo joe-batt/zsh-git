@@ -15,6 +15,7 @@ typeset -gA ZSH_GIT_COLORS
 : ${ZSH_GIT_COLORS[copied]:="yellow"}
 : ${ZSH_GIT_COLORS[renamed]:="yellow"}
 : ${ZSH_GIT_COLORS[untracked]:="red"}
+: ${ZSH_GIT_COLORS[stashed]:="white"}
 # Allow for functions in the prompt.
 
 # Autoload zsh functions.
