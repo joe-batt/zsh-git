@@ -30,7 +30,7 @@ if [ -n "$__CURRENT_GIT_BRANCH" ]; then
         str="${str/D/"%F{$ZSH_GIT_COLORS[deleted]}-"}"
         str="${str/R/"%F{$ZSH_GIT_COLORS[renamed]}↹"}"
         str="${str/C/"%F{$ZSH_GIT_COLORS[copied]}↷"}"
-        str="${str/'?'/"%F{$ZSH_GIT_COLORS[deleted]}?"}"
+        str="${str/'?'/"%F{$ZSH_GIT_COLORS[untracked]}?"}"
         str="${str/'U'/"%F{$ZSH_GIT_COLORS[conflict]}⚡"}"
         s2+="$str"
     fi
