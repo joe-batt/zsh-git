@@ -1,6 +1,6 @@
 if [ -n "$__CURRENT_GIT_BRANCH" ]; then
     local s2
-    local s=' %B('
+    local s=" $fg_bold[default]("
     s+="%F{$ZSH_GIT_COLORS[branch]}${__CURRENT_GIT_BRANCH}%b"
     case "$__CURRENT_GIT_BRANCH_STATUS" in
 	ahead*behind*) 
@@ -36,10 +36,10 @@ if [ -n "$__CURRENT_GIT_BRANCH" ]; then
     fi
 
     if ! [[ -z $s2 ]]; then
-        s+="%b%B|$s2"
+        s+="$fg_bold[default]|$s2"
     fi
 
-    s+='%b%B)%b'
+    s+="$fg_bold[default])"
     
     echo -n "$s"
 fi
