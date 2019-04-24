@@ -24,18 +24,25 @@ setopt prompt_subst
 source ~/.zsh/git/init_git_prompt.sh
 ```
 
-Now you can use <tt>$(prompt_git_info)</tt> in your own prompt definition to show the git info
+Now you can use <tt>$(prompt\_git\_info)</tt> in your own prompt definition to show the git info
 
 ## git Information Reference
 ![reference](http://joe-batt.github.io/git-prompt-desc.png)
 
 ## Customization
-The git part does not allow customisation yet. But you can choose all colors used in the regular prompt:
-```
-prompt joe [<color1> [<color2> [<color3> [<color4> [<color5>]]]]]
-        color1: user@host (non-root user)
-        color2: [24:00:00] (time)
-        color3: /path/ (pwd)
-        color4: [jobs: 1] (jobcount in right prompt)
-        color5: host (like user@host but for root)
-```
+Both regular prompt and git part use dictionaries for customisation, you can set 
+these in your config to override defaults. 
+### General Prompt
+The regular
+prompt uses the variable <tt>ZSH\_JOE\_COLORS<tt>, the possible keys are:
+- **user**: color of user@host
+- **time**: color of timestamp
+- **pwd**: color of working directory path
+- **jobs**: color of job counter on the right
+- **root**: color for root user
+
+### Git Prompt
+For the git prompt it is probably easiest to check the defaults in <tt>git/init\_git\_prompt.sh</tt>, for all possible settings. The three dictionaries in use are:
+- <tt>ZSH\_GIT\_COLORS</tt> defines the colors for the branch and different markers (e.g. added)
+- <tt>ZSH\_GIT\_SYMBOLS</tt> defines the correlated symbols used for markers
+- <tt>ZSH\_GIT\_STATE\_STRINGS<tt> matches <tt>git status</tt> to the respective colored symbols, but can be overwritten in their entirety
