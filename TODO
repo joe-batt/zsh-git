@@ -1,5 +1,3 @@
 - clean up the whole thing!
-- put prompt colors in named array
 - fix quirky parsing of git status --porcelain
-- put default git characters (eg. M for modified) in named array
 - use proper naming for variables
