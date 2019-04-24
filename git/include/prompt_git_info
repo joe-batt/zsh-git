@@ -1,45 +1,43 @@
 if [ -n "$__CURRENT_GIT_BRANCH" ]; then
-    local s2
-    local s=" $fg_bold[default]("
-    s+="%F{$ZSH_GIT_COLORS[branch]}${__CURRENT_GIT_BRANCH}%b"
-    case "$__CURRENT_GIT_BRANCH_STATUS" in
-	ahead*behind*) 
-	    s2+="%b%F{$ZSH_GIT_COLORS[ahead_behind]}${${__CURRENT_GIT_BRANCH_STATUS#*" "}%,*}⇅"
-	    s2+="${__CURRENT_GIT_BRANCH_STATUS##*" "}%B"
-	    ;;
-        ahead*)
-	    s2+="%F{$ZSH_GIT_COLORS[ahead]}${__CURRENT_GIT_BRANCH_STATUS#*" "}↑"
-	    ;;
-        diverged*)
-	    s2+="%F{$ZSH_GIT_COLORS[deleted]}↕"
-	    ;;
-        behind*)
-	    s2+="%F{$ZSH_GIT_COLORS[behind]}${__CURRENT_GIT_BRANCH_STATUS#*" "}↓"
-	    ;;
-    esac
+    local state_string
 
+    # Check for behind/ahead state
+    if ! [[ -z $__CURRENT_GIT_BRANCH_STATUS ]]; then
+        case "$__CURRENT_GIT_BRANCH_STATUS" in
+          ahead*behind*) 
+            state_string+="%b%F{$ZSH_GIT_COLORS[ahead_behind]}${${__CURRENT_GIT_BRANCH_STATUS#*" "}%,*}$ZSH_GIT_SYMBOLS[ahead_behind]"
+            state_string+="${__CURRENT_GIT_BRANCH_STATUS##*" "}%B"
+            ;;
+          ahead*)
+            state_string+="%F{$ZSH_GIT_COLORS[ahead]}${__CURRENT_GIT_BRANCH_STATUS#*" "}$ZSH_GIT_SYMBOLS[ahead]"
+            ;;
+          diverged*)
+            state_string+="$(__zsh_symbol_color_helper diverged)"
+            ;;
+          behind*)
+            state_string+="%F{$ZSH_GIT_COLORS[behind]}${__CURRENT_GIT_BRANCH_STATUS#*" "}$ZSH_GIT_SYMBOLS[behind]"
+            ;;
+        esac
+    fi
+
+    # Check for stashed files
     if [[ $__CURRENT_GIT_STAGED -gt 0 ]]; then
-        s2+="%b%F{$ZSH_GIT_COLORS[stashed]}${__CURRENT_GIT_STAGED}S%B"
+        state_string+="%b%F{$ZSH_GIT_COLORS[stashed]}${__CURRENT_GIT_STAGED}$ZSH_GIT_SYMBOLS[stashed]%B"
     fi
 
+    # Parse current state (modified, added, etc)
     if ! [[ -z "$__CURRENT_GIT_STATE" ]]; then
-        local str
-        str="$__CURRENT_GIT_STATE"
-        str="${str/M/"%F{$ZSH_GIT_COLORS[modified]}M"}"
-        str="${str/A/"%F{$ZSH_GIT_COLORS[added]}+"}"
-        str="${str/D/"%F{$ZSH_GIT_COLORS[deleted]}-"}"
-        str="${str/R/"%F{$ZSH_GIT_COLORS[renamed]}↹"}"
-        str="${str/C/"%F{$ZSH_GIT_COLORS[copied]}↷"}"
-        str="${str/'?'/"%F{$ZSH_GIT_COLORS[untracked]}?"}"
-        str="${str/'U'/"%F{$ZSH_GIT_COLORS[conflict]}⚡"}"
-        s2+="$str"
+        for state in ${=__CURRENT_GIT_STATE}; do
+            ! [[ -z $ZSH_GIT_STATE_STRINGS[$state] ]] && state_string+=$ZSH_GIT_STATE_STRINGS[$state]
+        done
     fi
 
-    if ! [[ -z $s2 ]]; then
-        s+="$fg_bold[default]|$s2"
+    # output prompt
+    echo -n "$fg_bold[default](%F{$ZSH_GIT_COLORS[branch]}${__CURRENT_GIT_BRANCH}%b"
+ 
+    if ! [[ -z $state_string ]]; then
+        echo -n "$fg_bold[default]|$state_string"
     fi
 
-    s+="$fg_bold[default])"
-    
-    echo -n "$s"
+    echo -n "$fg_bold[default])"
 fi
