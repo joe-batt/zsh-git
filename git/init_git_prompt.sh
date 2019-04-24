@@ -12,7 +12,7 @@ typeset -gA ZSH_GIT_COLORS
 : ${ZSH_GIT_COLORS[added]:="green"}
 : ${ZSH_GIT_COLORS[conflict]:="magenta"}
 : ${ZSH_GIT_COLORS[deleted]:="red"}
-: ${ZSH_GIT_COLORS[deleted]:="diverged"}
+: ${ZSH_GIT_COLORS[diverged]:="red"}
 : ${ZSH_GIT_COLORS[copied]:="yellow"}
 : ${ZSH_GIT_COLORS[renamed]:="yellow"}
 : ${ZSH_GIT_COLORS[untracked]:="red"}
