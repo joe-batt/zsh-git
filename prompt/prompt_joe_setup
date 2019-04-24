@@ -29,35 +29,35 @@ EOF
 
 prompt_joe_setup () {
 	setopt prompt_subst
-	local -A col
+    typeset -gA ZSH_JOE_COLORS
 
 	source $ZSH_GIT_DIR/git/init_git_prompt.sh
 
-	col['user']=${1:-'red'}
-	col['time']=${2:-'cyan'}
-	col['pwd']=${3:-'blue'}
-	col['jobs']=${4:-'green'}
-	col['root']=${5:-'magenta'}
+    : ${ZSH_JOE_COLORS[user]:="red"}
+    : ${ZSH_JOE_COLORS[time]:="cyan"}
+    : ${ZSH_JOE_COLORS[pwd]:="blue"}
+    : ${ZSH_JOE_COLORS[jobs]:="green"}
+    : ${ZSH_JOE_COLORS[root]:="magenta"}
 	
 	local userstr
 	local usercol
 	if [ "$USER" = 'root' ]
 	then
-	  userstr="%F{$col['root']}%m"
-	  usercol=$col['root']
+	  userstr="%F{$ZSH_JOE_COLORS[root]}%m"
+	  usercol=$ZSH_JOE_COLORS[root]
 	else
-	  userstr="%F{$col['user']}%n@%m"
-	  usercol=$col['user']
+	  userstr="%F{$ZSH_JOE_COLORS[user]}%n@%m"
+	  usercol=$ZSH_JOE_COLORS[user]
 	fi
 
 	# main prompt
-	PROMPT="%F{$col['time']}[%*] $userstr%b%B"'$(prompt_git_info)'"%B%F{$col['pwd']} %~$prompt_newline %% %b%k%f"
+	PROMPT="%F{$ZSH_JOE_COLORS[time]}[%*] $userstr%b%B"'$(prompt_git_info)'"%B%F{$ZSH_JOE_COLORS[pwd]} %~$prompt_newline %% %b%k%f"
 
 	# sub prompt (e.g. "for> ")
-	PROMPT2="%F{$usercol}%_%F{$col['pwd']}> %b%k%f"
+	PROMPT2="%F{$usercol}%_%F{$ZSH_JOE_COLORS[pwd]}> %b%k%f"
 
 	# right prompt, shows number jobs and :( if the last exit status was not 0
-	RPROMPT="%(?..%B:(%b) %B%F{$col['jobs']}%1(j.[jobs: %j]%b"
+	RPROMPT="%(?..%B:(%b) %B%F{$ZSH_JOE_COLORS[jobs]}%1(j.[jobs: %j]%b"
 }
 
 prompt_joe_setup "$@"
