@@ -39,11 +39,13 @@ __zsh_symbol_color_helper(){
 
 # default state strings combined from symbol and color
 typeset -gA ZSH_GIT_STATE_STRINGS
-: ${ZSH_GIT_STATE_STRINGS[M]:="$(__zsh_symbol_color_helper modified)"}
-: ${ZSH_GIT_STATE_STRINGS[D]:="$(__zsh_symbol_color_helper deleted)"}
+: ${ZSH_GIT_STATE_STRINGS[ M]:="$(__zsh_symbol_color_helper modified)"}
+: ${ZSH_GIT_STATE_STRINGS[M ]:="$(__zsh_symbol_color_helper renamed)"}
+: ${ZSH_GIT_STATE_STRINGS[MM]:="$(__zsh_symbol_color_helper renamed)$(__zsh_symbol_color_helper modified)"}
+: ${ZSH_GIT_STATE_STRINGS[D ]:="$(__zsh_symbol_color_helper deleted)"}
 : ${ZSH_GIT_STATE_STRINGS[RM]:="$(__zsh_symbol_color_helper renamed)"}
-: ${ZSH_GIT_STATE_STRINGS[A]:="$(__zsh_symbol_color_helper added)"}
-: ${ZSH_GIT_STATE_STRINGS[C]:="$(__zsh_symbol_color_helper copied)"}
+: ${ZSH_GIT_STATE_STRINGS[A ]:="$(__zsh_symbol_color_helper added)"}
+: ${ZSH_GIT_STATE_STRINGS[C ]:="$(__zsh_symbol_color_helper copied)"}
 : ${ZSH_GIT_STATE_STRINGS[??]:="$(__zsh_symbol_color_helper untracked)"}
 : ${ZSH_GIT_STATE_STRINGS[UU]:="$(__zsh_symbol_color_helper conflict)"}
 
