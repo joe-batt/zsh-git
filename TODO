@@ -1,3 +1,4 @@
-- clean up the whole thing!
-- fix quirky parsing of git status --porcelain
-- use proper naming for variables
+- further clean up needed
+- make prompt format more customizable (e.g. optionally use 3M for 3 modified files)
+- extract base zsh-prompt into seperate package, so this just contains the git-specific part
+
