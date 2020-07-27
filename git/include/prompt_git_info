@@ -32,8 +32,6 @@ if [ -n "$__CURRENT_GIT_BRANCH" ]; then
             ! [[ -z $ZSH_GIT_STATE_STRINGS[$state] ]] && state_string+=$ZSH_GIT_STATE_STRINGS[$state]
         done
     fi
-    # clean duplicates from state_string
-    state_string="$(echo $state_string | grep . | sort -u | tr -d "\n")"
 
     # output prompt
     echo -n "$fg_bold[default](%F{$ZSH_GIT_COLORS[branch]}${__CURRENT_GIT_BRANCH}%b"

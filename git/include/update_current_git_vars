@@ -9,7 +9,7 @@ local st state
 st="$(LANG="en" git status -b --porcelain 2>/dev/null)"
 if [[ $? -eq 0 ]]; then
     br=$(echo "$st" | head -n1)
-    __CURRENT_GIT_STATE=("${(@f)$(echo "$st" | tail -n+2 | cut -c1-2 | sort -u)}")
+    __CURRENT_GIT_STATE=("${(@f)$(echo "$st" | tail -n+2 | cut -c1-2 | sed 's/MM/M\n M/g' | sort -u)}")
     __CURRENT_GIT_BRANCH=${${br#"## "}%%...*}
 
     __CURRENT_GIT_STAGED=$(git stash list | wc -l)
