@@ -2,6 +2,8 @@
 autoload -U colors
 colors
 
+[[ -e ~/.zsh/colors.zsh ]] && which async_init &> /dev/null && source ~/.zsh/colors.zsh
+
 # define default colors
 typeset -gA ZSH_GIT_COLORS
 : ${ZSH_GIT_COLORS[branch]:="cyan"}
@@ -61,7 +63,49 @@ typeset -ga preexec_functions
 typeset -ga precmd_functions
 typeset -ga chpwd_functions
 
-# Append git functions needed for prompt.
-preexec_functions+='preexec_update_git_vars'
-chpwd_functions+='update_current_git_vars'
-precmd_functions+='precmd_update_git_vars'
+# ASYNC
+# mostly taken from
+# https://gist.github.com/denysdovhan/e83dec6f09b237acbc24a6bb25fabd13
+
+function prompt_git {
+    cd -q $1
+    update_current_git_vars 2>&1
+    prompt_git_info
+}
+
+prompt_refresh() {
+    zle && zle .reset-prompt
+}
+
+prompt_callback() {
+    local job=$1 code=$2 output=$3 exec_time=$4
+    git_info=$output
+    prompt_refresh
+}
+
+prompt_async_precmd() {
+    async_job 'prompt' prompt_git $PWD
+}
+
+prompt_precmd(){
+    git_info=$(prompt_git_info)
+}
+
+# check for zsh-async
+if (which async_init &> /dev/null); then
+    async_init
+    # Start async worker
+    async_start_worker 'prompt'
+    # Register callback function for the workers completed jobs
+    async_register_callback 'prompt' prompt_callback
+
+    # Setup
+    zmodload zsh/zle
+    # Append git functions needed for prompt.
+    precmd_functions+='prompt_async_precmd'
+else
+    # Append git functions needed for prompt.
+    preexec_functions+='preexec_update_git_vars'
+    chpwd_functions+='update_current_git_vars'
+    precmd_functions+='prompt_precmd'
+fi

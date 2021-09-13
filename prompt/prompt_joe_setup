@@ -51,7 +51,7 @@ prompt_joe_setup () {
 	fi
 
 	# main prompt
-	PROMPT="%F{$ZSH_JOE_COLORS[time]}[%*] $userstr%b%B"'$(prompt_git_info)'"%B%F{$ZSH_JOE_COLORS[pwd]} %~$prompt_newline %% %b%k%f"
+	PROMPT="%F{$ZSH_JOE_COLORS[time]}[%*] $userstr%b%B"'${git_info}'"%B%F{$ZSH_JOE_COLORS[pwd]} %~$prompt_newline %% %b%k%f"
 
 	# sub prompt (e.g. "for> ")
 	PROMPT2="%F{$usercol}%_%F{$ZSH_JOE_COLORS[pwd]}> %b%k%f"
