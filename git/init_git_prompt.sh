@@ -84,7 +84,7 @@ prompt_callback() {
 }
 
 prompt_async_precmd() {
-    async_job 'prompt' prompt_git $PWD
+    async_job 'prompt' prompt_git $PWD || async_start_worker 'prompt'
 }
 
 prompt_precmd(){
