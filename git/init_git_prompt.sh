@@ -83,8 +83,14 @@ prompt_callback() {
     prompt_refresh
 }
 
+
+prompt_init_worker(){
+    async_start_worker 'prompt'
+    async_register_callback 'prompt' prompt_callback
+}
+
 prompt_async_precmd() {
-    async_job 'prompt' prompt_git $PWD || async_start_worker 'prompt'
+    async_job 'prompt' prompt_git $PWD || prompt_init_worker
 }
 
 prompt_precmd(){
@@ -95,9 +101,7 @@ prompt_precmd(){
 if (which async_init &> /dev/null); then
     async_init
     # Start async worker
-    async_start_worker 'prompt'
-    # Register callback function for the workers completed jobs
-    async_register_callback 'prompt' prompt_callback
+    prompt_init_worker
 
     # Setup
     zmodload zsh/zle
