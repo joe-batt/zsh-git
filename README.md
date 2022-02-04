@@ -1,3 +1,5 @@
+***Deprecation Warning: I switched to [starship](https://starship.rs/) for my prompt***
+
 # zsh-git
 
 This project is yet another fancy prompt that provides you with information about the current git directory. In a git repository, the prompt looks like this:
